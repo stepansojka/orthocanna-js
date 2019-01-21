@@ -16,6 +16,7 @@ find_package (Seastar REQUIRED)
 
 add_executable (ocn
   src/chakra/chakra.cpp
+  src/chakra/args.cpp
   src/chakra/exception.cpp
   src/orthocanna.cpp
   src/engine.cpp

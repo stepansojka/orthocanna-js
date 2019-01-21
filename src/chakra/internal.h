@@ -3,6 +3,7 @@
 #include "fwd.h"
 #include "concepts.h"
 #include "exception.h"
+#include "invoke.h"
 
 #include <type_traits>
 #include <functional>
@@ -14,27 +15,6 @@
 
 namespace ocn::chakra
 {
-  template <typename F, typename... Args>
-  concept bool JsrtFunction = requires (F f, Args... args) {
-    { f(args...) } -> JsErrorCode;
-  };
-
-  template <typename F, typename... Args>
-    requires JsrtFunction<F, Args...>
-  JsErrorCode invoke(F&& f, Args&&... args)
-  {
-    return std::forward<F>(f)(std::forward<Args>(args)...);
-  }
-
-  template <typename F, typename... Args>
-    requires JsrtFunction<F, Args...>
-  void invoke_checked(F&& f, Args&&... args)
-  {
-    JsErrorCode error_code = invoke(f, args...);
-    if (error_code != JsNoError)
-      throw exception(error_code);
-  }
-
   template <typename T>
   auto delete_external(T)
   {
@@ -70,9 +50,17 @@ namespace ocn::chakra
     set_property(object, std::begin(name), std::size(name), property);
   }
 
-  ref new_string(const char* s, size_t size);
+  template <Int T>
+  ref new_int(T i)
+  {
+    ref result;
+    invoke_checked(JsIntToNumber, i, &result);
+    return result;
+  }
 
-  ref new_function(JsNativeFunction fn, void *callback_state);
+  int unwrap_int(ref object);
+
+  ref new_string(const char* s, size_t size);
 
   template <String T>
   ref new_string(const T& s)
@@ -91,9 +79,11 @@ namespace ocn::chakra
 
     T result;
     result.resize(len);
-    invoke_checked(JsCopyString, str, result.data(), len, nullptr);
+    invoke_checked(JsCopyString, str, std::begin(result), len, nullptr);
     return result;
   }
+
+  ref new_function(JsNativeFunction fn, void *callback_state);
 
   template<typename T>
   ref call(ref fn, T args)
@@ -105,14 +95,4 @@ namespace ocn::chakra
   }
 
   ref new_object();
-
-  template <Int T>
-  ref new_int(T i)
-  {
-    ref result;
-    invoke_checked(JsIntToNumber, i, &result);
-    return result;
-  }
-
-  int unwrap_int(ref object);
 }

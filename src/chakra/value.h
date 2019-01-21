@@ -3,6 +3,8 @@
 #include "fwd.h"
 #include "concepts.h"
 #include "internal.h"
+#include "args.h"
+#include "function.h"
 
 namespace ocn::chakra
 {
@@ -76,7 +78,7 @@ namespace ocn::chakra
     value operator()(Args... args)
     {
       std::array<ref, sizeof...(args)> arr {{ value{args}... }};
-      return chakra::call(ref_, arr);
+      return call(ref_, arr);
     }
 
     template <typename T>
@@ -107,46 +109,11 @@ namespace ocn::chakra
     }
   };
 
-  struct args
-  {
-    ref* args_;
-    size_t size_;
-
-    args(ref* args, size_t size):
-      args_(args),
-      size_(size)
-    {}
-
-    ref begin() const { return args_[0]; }
-
-    ref end() const { return args_[size_ - 1]; }
-
-    value operator[](size_t i) const
-    {
-      return args_[i];
-    }
-
-    size_t size() const
-    {
-      return size_;
-    }
-  };
-
   template <typename T>
   setter value::operator[](const T& prop)
   {
     auto id = property_id(prop);
     return {ref_, id};
-  }
-
-  template <typename Fn, std::size_t... I>
-  auto invoke_with_argpack(
-    Fn fn, void** args, unsigned short len, std::index_sequence<I...>)
-  {
-    if (len < sizeof...(I))
-      throw std::runtime_error("not enough values");
-
-    return std::invoke(*fn, value{args[I]}...);
   }
 
   template <
