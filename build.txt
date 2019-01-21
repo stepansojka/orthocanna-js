@@ -1,0 +1,11 @@
+yum install -y libcurl-devel gcc gcc-c++ make libtool
+
+curl -Ls https://github.com/Kitware/CMake/releases/download/v3.13.2/cmake-3.13.2.tar.gz | tar xz
+cd cmake-3.13.2 && ./bootstrap --system-curl && make && sudo make install
+
+curl -Ls https://ftp.gnu.org/gnu/stow/stow-2.2.2.tar.gz | tar xz
+cd stow-2.2.2 && ./configure && make && sudo make install
+
+yum install -y hwloc-devel numactl-devel libpciaccess-devel libxml2-devel xfsprogs-devel gnutls-devel lksctp-tools-devel lz4-devel protobuf-devel protobuf-compiler systemtap-sdt-devel ninja-build libatomic git
+
+./cooking.sh -r dev -i dpdk -i fmt -i ragel -i yaml-cpp -i Boost -i c-ares -i cryptopp -t Release -- -DSeastar_DPDK=ON
