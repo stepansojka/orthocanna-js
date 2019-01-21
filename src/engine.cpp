@@ -1,9 +1,10 @@
 #include "engine.h"
-#include "chakra.h"
 #include "core.h"
 #include "time.h"
 #include "http.h"
 #include "console.h"
+
+#include "chakra/chakra.h"
 
 #include <seastar/core/reactor.hh>
 #include <seastar/http/httpd.hh>

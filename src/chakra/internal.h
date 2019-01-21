@@ -1,8 +1,8 @@
 #pragma once
 
-#include "chakra_fwd.h"
-#include "chakra_concepts.h"
-#include "chakra_exception.h"
+#include "fwd.h"
+#include "concepts.h"
+#include "exception.h"
 
 #include <type_traits>
 #include <functional>

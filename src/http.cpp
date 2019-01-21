@@ -1,7 +1,7 @@
 #include "http.h"
 
-#include "chakra.h"
 #include "promise.h"
+#include "chakra/chakra.h"
 
 #include <seastar/http/httpd.hh>
 #include <seastar/http/handlers.hh>

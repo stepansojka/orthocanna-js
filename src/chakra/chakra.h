@@ -1,10 +1,10 @@
 #pragma once
 
-#include "chakra_fwd.h"
-#include "chakra_concepts.h"
-#include "chakra_internal.h"
-#include "chakra_exception.h"
-#include "chakra_value.h"
+#include "fwd.h"
+#include "concepts.h"
+#include "internal.h"
+#include "exception.h"
+#include "value.h"
 
 #include <seastar/core/sstring.hh>
 #include <seastar/core/temporary_buffer.hh>

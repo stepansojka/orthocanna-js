@@ -1,6 +1,6 @@
 #include "console.h"
 
-#include "chakra.h"
+#include "chakra/chakra.h"
 
 #include <seastar/core/reactor.hh>
 

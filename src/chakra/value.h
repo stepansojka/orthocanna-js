@@ -1,9 +1,8 @@
 #pragma once
 
-#include "chakra_fwd.h"
-#include "chakra_concepts.h"
-//#include "function_traits.h"
-#include "chakra_internal.h"
+#include "fwd.h"
+#include "concepts.h"
+#include "internal.h"
 
 namespace ocn::chakra
 {

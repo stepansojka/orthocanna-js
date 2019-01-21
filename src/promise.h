@@ -1,6 +1,6 @@
 #pragma once
 
-#include "chakra.h"
+#include "chakra/chakra.h"
 
 #include <seastar/core/future.hh>
 

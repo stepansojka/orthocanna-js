@@ -15,16 +15,14 @@ set(CMAKE_CXX_FLAGS_RELEASE "-fconcepts -O3 -std=c++2a")
 find_package (Seastar REQUIRED)
 
 add_executable (ocn
-  src/function_traits_test.cpp
-  #/src/chakra_test.cpp
+  src/chakra/chakra.cpp
+  src/chakra/exception.cpp
   src/orthocanna.cpp
   src/engine.cpp
   src/core.cpp
   src/console.cpp
   src/time.cpp
-  src/http.cpp
-  src/chakra.cpp
-  src/exception.cpp)
+  src/http.cpp)
 
 target_link_libraries (ocn
   PRIVATE Seastar::seastar ChakraCore)

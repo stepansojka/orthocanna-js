@@ -1,6 +1,5 @@
 #pragma once
 
-#include "function_traits.h"
 #include "monkey_patching.h"
 
 #include <type_traits>
@@ -14,6 +13,9 @@ namespace ocn::chakra
 
   template <typename T>
   concept bool Unsigned = std::is_integral<T>::value && !std::is_signed<T>::value;
+
+  template <typename T>
+  concept bool Function = std::is_function<T>::value;
 
   template <typename T>
   concept bool Pointer = std::is_pointer<T>::value;
@@ -39,10 +41,10 @@ namespace ocn::chakra
     { std::size(s) } -> Unsigned;
   };
 
-  template <typename T>
-  concept bool Callable = requires {
-    function_traits<T>::arity >= 0;
-    typename function_traits<T>::args;
-    typename function_traits<T>::return_type;
-  };
+  // template <typename T>
+  // concept bool Callable = requires {
+  //   function_traits<T>::arity >= 0;
+  //   typename function_traits<T>::args;
+  //   typename function_traits<T>::return_type;
+  // };
 }
