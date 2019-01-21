@@ -5,6 +5,7 @@
 #include <ChakraCore.h>
 
 #include <utility>
+#include <functional>
 
 namespace ocn::chakra
 {
@@ -17,14 +18,14 @@ namespace ocn::chakra
     requires JsrtFunction<F, Args...>
     JsErrorCode invoke(F&& f, Args&&... args)
     {
-      return std::forward<F>(f)(std::forward<Args>(args)...);
+      return std::invoke(std::forward<F>(f), std::forward<Args>(args)...);
     }
 
   template <typename F, typename... Args>
     requires JsrtFunction<F, Args...>
     void invoke_checked(F&& f, Args&&... args)
     {
-      JsErrorCode error_code = invoke(f, args...);
+      JsErrorCode error_code = invoke(std::forward<F>(f), std::forward<Args>(args)...);
       if (error_code != JsNoError)
         throw exception(error_code);
     }
